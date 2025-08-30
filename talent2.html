@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Register & Login</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #f4f4f4;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+    }
+    .container {
+      background: #fff;
+      padding: 25px;
+      border-radius: 8px;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+      width: 320px;
+    }
+    h2 {
+      text-align: center;
+      margin-bottom: 15px;
+      color: #333;
+    }
+    label {
+      display: block;
+      margin: 10px 0 5px;
+      font-size: 14px;
+      color: #555;
+    }
+    input[type="text"], input[type="email"], input[type="password"] {
+      width: 100%;
+      padding: 10px;
+      margin-bottom: 15px;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+    }
+    input[type="submit"], button {
+      width: 100%;
+      padding: 10px;
+      border: none;
+      background: #3498db;
+      color: white;
+      font-size: 16px;
+      border-radius: 5px;
+      cursor: pointer;
+      margin-top: 5px;
+    }
+    input[type="submit"]:hover, button:hover {
+      background: #2980b9;
+    }
+    p {
+      text-align: center;
+      font-size: 14px;
+      margin-top: 10px;
+    }
+    #welcome {
+      display: none;
+      text-align: center;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="container" id="register-box">
+    <h2>Register</h2>
+    <form id="registerForm">
+      <label>Username</label>
+      <input type="text" id="regUsername" required>
+      
+      <label>Password</label>
+      <input type="password" id="regPassword" required>
+      
+      <input type="submit" value="Register">
+    </form>
+    <p>Already have an account? <button onclick="showLogin()">Login</button></p>
+  </div>
+
+  <div class="container" id="login-box" style="display:none;">
+    <h2>Login</h2>
+    <form id="loginForm">
+      <label>Username</label>
+      <input type="text" id="loginUsername" required>
+      
+      <label>Password</label>
+      <input type="password" id="loginPassword" required>
+      
+      <input type="submit" value="Login">
+    </form>
+    <p>Don’t have an account? <button onclick="showRegister()">Register</button></p>
+  </div>
+
+  <div class="container" id="welcome">
+    <h2>Welcome!</h2>
+    <p id="welcomeMsg"></p>
+    <button onclick="logout()">Logout</button>
+  </div>
+
+  <script>
+    // Show login form
+    function showLogin() {
+      document.getElementById("register-box").style.display = "none";
+      document.getElementById("login-box").style.display = "block";
+    }
+
+    // Show register form
+    function showRegister() {
+      document.getElementById("login-box").style.display = "none";
+      document.getElementById("register-box").style.display = "block";
+    }
+
+    // Register user
+    document.getElementById("registerForm").addEventListener("submit", function(e) {
+      e.preventDefault();
+      let username = document.getElementById("regUsername").value;
+      let password = document.getElementById("regPassword").value;
+      
+      localStorage.setItem("username", username);
+      localStorage.setItem("password", password);
+      
+      alert("Registered successfully! You can now login.");
+      showLogin();
+    });
+
+    // Login user
+    document.getElementById("loginForm").addEventListener("submit", function(e) {
+      e.preventDefault();
+      let username = document.getElementById("loginUsername").value;
+      let password = document.getElementById("loginPassword").value;
+      
+      let storedUser = localStorage.getItem("username");
+      let storedPass = localStorage.getItem("password");
+      
+      if(username === storedUser && password === storedPass) {
+        document.getElementById("login-box").style.display = "none";
+        document.getElementById("welcome").style.display = "block";
+        document.getElementById("welcomeMsg").innerText = "Hello, " + username + "!";
+      } else {
+        alert("Invalid username or password!");
+      }
+    });
+
+    // Logout
+    function logout() {
+      document.getElementById("welcome").style.display = "none";
+      showLogin();
+    }
+  </script>
+love youuu
+
+</body>
+</html>
